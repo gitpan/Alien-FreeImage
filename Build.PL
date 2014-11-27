@@ -3,8 +3,8 @@ use warnings;
 
 use lib 'inc';
 
-my $package = $^O eq 'MSWin32' ? 'My::Builder::Windows' : 
-              $^O eq 'cygwin'  ? 'My::Builder::Cygwin' :
+my $package = $^O eq 'MSWin32' ? 'My::Builder::Windows' :
+              $^O eq 'cygwin'  ? 'My::Builder::Cygwin'  :
               'My::Builder::Unix';
 
 eval "require $package" or die "Require '$package' failed: $@\n";

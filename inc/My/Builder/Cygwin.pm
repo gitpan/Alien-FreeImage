@@ -14,7 +14,7 @@ sub make_clean {
 sub make_inst {
   my ($self, $prefixdir) = @_;
 
-  my @cmd = ( $self->get_make, '-f', $makefile, "DISTDIR=$prefixdir", "dist" );
+  my @cmd = ( $self->get_make, '-f', $makefile, "DISTDIR=$prefixdir", "CC=gcc", "CXX=g++", "dist" );
   warn "[cmd: ".join(' ',@cmd)."]\n";
   $self->do_system(@cmd) or die "###ERROR### make failed [$?]";
 }

@@ -16,9 +16,14 @@ sub make_inst {
   $prefixdir =~ s|\\|/|g; # gnu make does not like \
   
   if($Config{cc} =~ /gcc/) {
+  
+    rename 'Source/LibJXR/common/include/guiddef.h', 'Source/LibJXR/common/include/guiddef.h.XXX' if -f 'Source/LibJXR/common/include/guiddef.h';
+
     my @cmd = ( $self->get_make, '-f', 'Makefile.mingw', "DISTDIR=$prefixdir", "FREEIMAGE_LIBRARY_TYPE=STATIC", "all" );
     warn "[cmd: ".join(' ',@cmd)."]\n";
     $self->do_system(@cmd) or die "###ERROR### [$?] during make ... ";
+    
+    rename 'Source/LibJXR/common/include/guiddef.h.XXX', 'Source/LibJXR/common/include/guiddef.h' if -f 'Source/LibJXR/common/include/guiddef.h.XXX';
   }
   else {
     die "only gcc is supported on MSWIn32";

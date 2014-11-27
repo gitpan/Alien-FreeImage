@@ -9,28 +9,24 @@ use File::Spec::Functions qw(catdir);
 
 =head1 NAME
 
-Alien::FreeImage - Building freeimage library - L<http://freeimage.sourceforge.net/>
+Alien::FreeImage - Building freeimage library L<http://freeimage.sourceforge.net/>
 
 =cut
 
-our $VERSION = '0.001';
-
-=head1 VERSION
-
-Version 0.001 of Alien::FreeImage uses I<freeimage> sources XXXX.
+our $VERSION = '0.002';
 
 =head1 SYNOPSIS
 
-B<IMPORTANT:> This module is not a perl binding for I<freeimage> library; it is just a helper module.
+This module is not a perl binding for I<freeimage> library; it is just a helper module that makes dev files (*.h, *.a)
+available for linking by other modules.
 
 Alien::FreeImage installation comprise of these steps:
 
 =over
 
-=item * Build I<freeimage> binaries from source codes (note: static libraries are build in this case)
+=item * Build I<freeimage> binaries from source codes (that comes bundled with this module)
 
-=item * Install binaries and dev files (*.h, *.a) into I<share> directory of Alien::FreeImage distribution - I<share>
-directory is usually something like this: /usr/lib/perl5/site_perl/5.10/auto/share/dist/Alien-FreeImage
+=item * Install dev files (*.h, *.a) into I<share> directory of Alien::FreeImage distribution
 
 =back
 
@@ -48,10 +44,6 @@ Later on you can use Alien::FreeImage in your module that needs to link with I<f
    # + additional params
  );
 
-B<IMPORTANT:> As Alien::FreeImage builds static libraries the modules using Alien::FreeImage need to have 
-Alien::FreeImage just for building, not for later use. In other words Alien:FreeImage is just "build dependency"
-not "run-time dependency".
-
 =head1 METHODS
 
 =head2 config()
@@ -60,11 +52,11 @@ This function is the main public interface to this module.
 
  Alien::FreeImage->config('LIBS');
 
-Returns a string like: '-L/path/to/freeimage/dir/lib -lfreeimage'
+Returns a string like: '-L/path/to/freeimage/dir -lfreeimage'
 
  Alien::FreeImage->config('INC');
 
-Returns a string like: '-I/path/to/freeimage/dir/include'
+Returns a string like: '-I/path/to/freeimage/dir'
 
  Alien::FreeImage->config('PREFIX');
 

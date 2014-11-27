@@ -199,6 +199,7 @@ TIFFFdOpen(thandle_t handle, const char *name, const char *mode) {
 	    _tiffReadProc, _tiffWriteProc, _tiffSeekProc, _tiffCloseProc,
 	    _tiffSizeProc, _tiffMapProc, _tiffUnmapProc);
 
+/* XXX-KMX-HACK
 	// Warning: tif_fd is declared as 'int' currently (see libTIFF), 
     // may result in incorrect file pointers inside libTIFF on 
     // 64bit machines (sizeof(int) != sizeof(long)). 
@@ -206,7 +207,7 @@ TIFFFdOpen(thandle_t handle, const char *name, const char *mode) {
 	if (tif) {
 		tif->tif_fd = (long)handle;
 	}
-
+*/
 	return tif;
 }
 
