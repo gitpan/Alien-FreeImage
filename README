@@ -1,0 +1,64 @@
+NAME
+    Alien::FreeImage - Building freeimage library -
+    <http://freeimage.sourceforge.net/>
+
+VERSION
+    Version 0.001 of Alien::FreeImage uses *freeimage* sources XXXX.
+
+SYNOPSIS
+    IMPORTANT: This module is not a perl binding for *freeimage* library; it
+    is just a helper module.
+
+    Alien::FreeImage installation comprise of these steps:
+
+    *   Build *freeimage* binaries from source codes (note: static libraries
+        are build in this case)
+
+    *   Install binaries and dev files (*.h, *.a) into *share* directory of
+        Alien::FreeImage distribution - *share* directory is usually
+        something like this:
+        /usr/lib/perl5/site_perl/5.10/auto/share/dist/Alien-FreeImage
+
+    Later on you can use Alien::FreeImage in your module that needs to link
+    with *freeimage* like this:
+
+     # Sample Makefile.pl
+     use ExtUtils::MakeMaker;
+     use Alien::FreeImage;
+
+     WriteMakefile(
+       NAME         => 'Any::FreeImage::Module',
+       VERSION_FROM => 'lib/Any/FreeImage/Module.pm',
+       LIBS         => Alien::FreeImage->config('LIBS'),
+       INC          => Alien::FreeImage->config('INC'),
+       # + additional params
+     );
+
+    IMPORTANT: As Alien::FreeImage builds static libraries the modules using
+    Alien::FreeImage need to have Alien::FreeImage just for building, not
+    for later use. In other words Alien:FreeImage is just "build dependency"
+    not "run-time dependency".
+
+METHODS
+  config()
+    This function is the main public interface to this module.
+
+     Alien::FreeImage->config('LIBS');
+
+    Returns a string like: '-L/path/to/freeimage/dir/lib -lfreeimage'
+
+     Alien::FreeImage->config('INC');
+
+    Returns a string like: '-I/path/to/freeimage/dir/include'
+
+     Alien::FreeImage->config('PREFIX');
+
+    Returns a string like: '/path/to/freeimage/dir'
+
+LICENSE
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+COPYRIGHT
+    2014+ KMX <kmx@cpan.org>
+
