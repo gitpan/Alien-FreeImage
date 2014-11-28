@@ -77,7 +77,35 @@ sub quote_literal {
 }
 
 sub get_make {
-  return $Config{gmake} || $Config{make} || 'make';
+  my ($self) = @_;
+ 
+  return $Config{make} if $^O eq 'cygwin';
+ 
+  my @try = ($Config{gmake}, 'gmake', 'gnumake', 'make', $Config{make});
+  my %tested;
+  print "Gonna detect GNU make:\n";
+  foreach my $name ( @try ) {
+    next unless $name;
+    next if $tested{$name};
+    $tested{$name} = 1;
+    print "- testing: '$name'\n";
+    if ($self->_is_gnu_make($name)) {
+      print "- found: '$name'\n";
+      return $name
+    }
+  }
+  print "- fallback to: 'make'\n";
+  return 'make';
+}
+ 
+sub _is_gnu_make {
+  my ($self, $name) = @_;
+  my $devnull = File::Spec->devnull();
+  my $ver = `$name --version 2> $devnull`;
+  if ($ver =~ /GNU Make/i) {
+    return 1;
+  }
+  return 0;
 }
 
 1;
