@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use base 'My::Builder';
 
+use Config;
 my $makefile = 'Makefile.gnu';
 
 sub make_clean {
@@ -14,7 +15,14 @@ sub make_clean {
 sub make_inst {
   my ($self, $prefixdir) = @_;
 
-  my @cmd = ( $self->get_make, '-f', $makefile, "DISTDIR=$prefixdir", "dist" );
+  my @args = ('-f', $makefile, "DISTDIR=$prefixdir");
+  
+  if ($Config{cc} eq 'cc') {
+    push @args, "CC=cc";
+    push @args, "CXX=c++";
+  }
+  
+  my @cmd = ( $self->get_make, @args, "dist" );
   warn "[cmd: ".join(' ',@cmd)."]\n";
   $self->do_system(@cmd) or die "###ERROR### make failed [$?]";
 }

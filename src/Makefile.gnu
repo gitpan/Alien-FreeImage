@@ -46,11 +46,9 @@ default: all
 
 all: dist
 
-$(DISTDIR):
+dist: $(STATICLIB) $(HEADER)
 	mkdir -p $(DISTDIR)
-
-dist: FreeImage $(DISTDIR)
-	cp *.a $(DISTDIR)
+	cp $(STATICLIB) $(DISTDIR)
 	cp $(HEADER) $(DISTDIR)
 
 dos2unix:

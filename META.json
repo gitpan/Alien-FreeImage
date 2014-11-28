@@ -46,7 +46,7 @@
    "provides" : {
       "Alien::FreeImage" : {
          "file" : "lib/Alien/FreeImage.pm",
-         "version" : "0.003"
+         "version" : "0.004"
       }
    },
    "release_status" : "stable",
@@ -61,5 +61,5 @@
          "url" : "http://github.com/kmx/alien-freeimage"
       }
    },
-   "version" : "0.003"
+   "version" : "0.004"
 }
