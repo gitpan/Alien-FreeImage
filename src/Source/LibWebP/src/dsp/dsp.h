@@ -29,7 +29,10 @@ extern "C" {
 #endif
 
 #if defined(__SSE2__) || defined(WEBP_MSC_SSE2)
+/* XXX-KMX-HACK gcc 4.2.1 has buggy SSE2 support */
+#if defined(__GNUC__) && (__GNUC__ != 4 || __GNUC_MINOR__ != 2)
 #define WEBP_USE_SSE2
+#endif
 #endif
 
 #if defined(__ANDROID__) && defined(__ARM_ARCH_7A__)
