@@ -13,6 +13,11 @@
       "version" : "2"
    },
    "name" : "Alien-FreeImage",
+   "no_index" : {
+      "directory" : [
+         "src"
+      ]
+   },
    "prereqs" : {
       "build" : {
          "requires" : {
@@ -46,7 +51,7 @@
    "provides" : {
       "Alien::FreeImage" : {
          "file" : "lib/Alien/FreeImage.pm",
-         "version" : "0.006"
+         "version" : "0.007"
       }
    },
    "release_status" : "stable",
@@ -61,5 +66,5 @@
          "url" : "http://github.com/kmx/alien-freeimage"
       }
    },
-   "version" : "0.006"
+   "version" : "0.007"
 }
