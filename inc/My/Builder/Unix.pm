@@ -20,6 +20,7 @@ sub make_inst {
   if ($Config{cc} eq 'gcc') {
     push @args, "CC=gcc";
     push @args, "CXX=g++";
+  }
   elsif ($Config{cc} =~ /^(cc|ccache cc)$/) {
     push @args, "CC=cc";
     push @args, "CXX=c++";

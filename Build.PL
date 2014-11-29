@@ -40,7 +40,7 @@ my $builder = $package->new(
   share_dir          => 'sharedir',
   add_to_cleanup     => [ 'Alien-FreeImage-*', 'build_done' ],
   create_readme      => 1,
-  no_index           => { directory => 'src' },
+  no_index           => { directory => ['src'] },
   meta_merge => {
     resources => {
       bugtracker => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Alien-FreeImage',
