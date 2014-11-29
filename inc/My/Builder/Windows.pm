@@ -33,18 +33,18 @@ sub make_inst {
 sub get_make {
   my ($self) = @_;
   my @try = ( 'gmake', 'mingw32-make', 'make', $Config{make}, $Config{gmake} );
-  print STDERR "Gonna detect make:\n";
+  warn "Gonna detect make:\n";
   foreach my $name ( @try ) {
     next unless $name;
-    print STDERR "- testing: '$name'\n";
+    warn "- testing: '$name'\n";
     if (system("$name --help 2>nul 1>nul") != 256) {
       # I am not sure if this is the right way to detect non existing executable
       # but it seems to work on MS Windows (more or less)
-      print STDERR "- found: '$name'\n";
+      warn "- found: '$name'\n";
       return $name;
     };
   }
-  print STDERR "- fallback to: 'dmake'\n";
+  warn "- fallback to: 'dmake'\n";
   return 'dmake';
 }
 

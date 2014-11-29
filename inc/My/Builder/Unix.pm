@@ -17,7 +17,10 @@ sub make_inst {
 
   my @args = ('-f', $makefile, "DISTDIR=$prefixdir");
   
-  if ($Config{cc} eq 'cc') {
+  if ($Config{cc} eq 'gcc') {
+    push @args, "CC=gcc";
+    push @args, "CXX=g++";
+  elsif ($Config{cc} =~ /^(cc|ccache cc)$/) {
     push @args, "CC=cc";
     push @args, "CXX=c++";
   }

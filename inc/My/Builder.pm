@@ -15,7 +15,7 @@ sub ACTION_install {
   my $self = shift;
   my $sharedir = eval {File::ShareDir::dist_dir('Alien-FreeImage')} || '';
   if ( -d $sharedir ) {
-    print STDERR "Removing the old '$sharedir'\n";
+    warn "Removing the old '$sharedir'\n";
     File::Path::rmtree($sharedir);
     File::Path::mkpath($sharedir);    
   }
@@ -50,8 +50,8 @@ sub ACTION_code {
     # store info about build into future Alien::FreeImage::ConfigData
     $self->config_data('share_subdir', $self->{properties}->{dist_version});
     $self->config_data('config', { PREFIX => '@PrEfIx@',
-                                   LIBS   => '-L' . $self->quote_literal('@PrEfIx@') . ' -lfreeimage',
-                                   INC    => '-I' . $self->quote_literal('@PrEfIx@'),
+                                   LIBS   => ' -L' . $self->quote_literal('@PrEfIx@') . ' -lfreeimage ',
+                                   INC    => ' -DFREEIMAGE_LIB -I' . $self->quote_literal('@PrEfIx@') . ' ',
                                  });
 
     # mark sucessfully finished build
@@ -81,20 +81,20 @@ sub get_make {
  
   return $Config{make} if $^O eq 'cygwin';
  
-  my @try = ($Config{gmake}, 'gmake', 'gnumake', 'make', $Config{make});
+  my @try = ($Config{gmake}, 'gmake', '/usr/local/bin/gmake', 'gnumake', 'make', $Config{make});
   my %tested;
-  print "Gonna detect GNU make:\n";
+  warn "Gonna detect GNU make:\n";
   foreach my $name ( @try ) {
     next unless $name;
     next if $tested{$name};
     $tested{$name} = 1;
-    print "- testing: '$name'\n";
+    warn "- testing: '$name'\n";
     if ($self->_is_gnu_make($name)) {
-      print "- found: '$name'\n";
+      warn "- found: '$name'\n";
       return $name
     }
   }
-  print "- fallback to: 'make'\n";
+  warn "- ### GNU make NOT FOUND ### falling back to 'make'\n";
   return 'make';
 }
  
