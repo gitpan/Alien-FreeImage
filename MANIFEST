@@ -31,6 +31,7 @@ src/Makefile.fip
 src/Makefile.gnu
 src/Makefile.iphone
 src/Makefile.mingw
+src/Makefile.nmake
 src/Makefile.osx
 src/Makefile.solaris
 src/Makefile.srcs

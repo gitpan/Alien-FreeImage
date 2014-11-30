@@ -8,26 +8,31 @@ use Config;
 
 sub make_clean {
   my $self = shift;
-  $self->do_system( $self->get_make, '-f', 'Makefile.mingw', "clean" );
+  if($Config{make} =~ /nmake/ && $Config{cc} =~ /cl/) { # MSVC compiler
+    $self->do_system( 'nmake', '-f', 'Makefile.nmake', "clean" );
+  }
+  else {
+    $self->do_system( $self->get_make, '-f', 'Makefile.mingw', "clean" );
+  }
 }
 
 sub make_inst {
   my ($self, $prefixdir) = @_;
   $prefixdir =~ s|\\|/|g; # gnu make does not like \
+  rename 'Source/LibJXR/common/include/guiddef.h', 'Source/LibJXR/common/include/guiddef.h.XXX' if -f 'Source/LibJXR/common/include/guiddef.h';
   
-  if($Config{cc} =~ /gcc/) {
-  
-    rename 'Source/LibJXR/common/include/guiddef.h', 'Source/LibJXR/common/include/guiddef.h.XXX' if -f 'Source/LibJXR/common/include/guiddef.h';
-
+  if($Config{make} =~ /nmake/ && $Config{cc} =~ /cl/) { # MSVC compiler
+    my @cmd = ( 'nmake', '-f', 'Makefile.nmake', "DISTDIR=$prefixdir", "FREEIMAGE_LIBRARY_TYPE=STATIC", "all" );
+    push @cmd, 'CFG=Win64' if $Config{archname} =~ /x64/;
+    warn "[cmd: ".join(' ',@cmd)."]\n";
+    $self->do_system(@cmd) or die "###ERROR### [$?] during make ... ";
+  }
+  else {  
     my @cmd = ( $self->get_make, '-f', 'Makefile.mingw', "DISTDIR=$prefixdir", "FREEIMAGE_LIBRARY_TYPE=STATIC", "all" );
     warn "[cmd: ".join(' ',@cmd)."]\n";
     $self->do_system(@cmd) or die "###ERROR### [$?] during make ... ";
-    
-    rename 'Source/LibJXR/common/include/guiddef.h.XXX', 'Source/LibJXR/common/include/guiddef.h' if -f 'Source/LibJXR/common/include/guiddef.h.XXX';
   }
-  else {
-    die "only gcc is supported on MSWIn32";
-  }
+  rename 'Source/LibJXR/common/include/guiddef.h.XXX', 'Source/LibJXR/common/include/guiddef.h' if -f 'Source/LibJXR/common/include/guiddef.h.XXX';
 }
 
 sub get_make {

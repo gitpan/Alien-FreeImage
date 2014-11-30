@@ -38,7 +38,7 @@ my $builder = $package->new(
     'Test::More'        => 0,
   },
   share_dir          => 'sharedir',
-  add_to_cleanup     => [ 'Alien-FreeImage-*', 'build_done' ],
+  add_to_cleanup     => [ 'build_done' ], # 'Alien-FreeImage-*'
   create_readme      => 1,
   no_index           => { directory => ['src'] },
   meta_merge => {
@@ -50,4 +50,7 @@ my $builder = $package->new(
 );
 
 $builder->create_build_script();
-unlink 'build_done'; # delete build marker (= force rebuild after running Build.PL)
+# delete build marker (= force rebuild after running Build.PL)
+unlink 'build_done';
+# renaming guiddef.h >> guiddef.h.XXX is mingw hack (this returns file back)
+rename 'src/Source/LibJXR/common/include/guiddef.h.XXX', 'src/Source/LibJXR/common/include/guiddef.h' if -f 'src/Source/LibJXR/common/include/guiddef.h.XXX';

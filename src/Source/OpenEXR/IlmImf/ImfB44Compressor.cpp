@@ -651,9 +651,9 @@ B44Compressor::compress (const char *inPtr,
     //
 
     int minX = range.min.x;
-    int maxX = min (range.max.x, _maxX);
+    int maxX = std::min (range.max.x, _maxX);
     int minY = range.min.y;
-    int maxY = min (range.max.y, _maxY);
+    int maxY = std::min (range.max.y, _maxY);
     
     unsigned short *tmpBufferEnd = _tmpBuffer;
     int i = 0;
