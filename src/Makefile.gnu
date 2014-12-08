@@ -28,10 +28,12 @@ CXXFLAGS ?= -O3 -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy
 CXXFLAGS += -D__ANSI__
 CXXFLAGS += $(INCLUDE)
 
-#ifeq ($(shell sh -c 'uname -m 2>/dev/null || echo not'),x86_64)
-#	CFLAGS += -fPIC
-#	CXXFLAGS += -fPIC
-#endif
+ifneq ($(CYGWIN),1)
+ifeq ($(shell sh -c 'uname -m 2>/dev/null || echo not'),x86_64)
+	CFLAGS += -fPIC
+	CXXFLAGS += -fPIC
+endif
+endif
 
 TARGET  = freeimage
 STATICLIB = lib$(TARGET).a

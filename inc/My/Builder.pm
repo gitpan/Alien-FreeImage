@@ -48,9 +48,10 @@ sub ACTION_code {
     chdir $self->base_dir();
    
     # store info about build into future Alien::FreeImage::ConfigData
+    my $libs = $^O eq 'MSWin32' ? ' -lfreeimage ' : ' -lfreeimage -lstdc++ ';
     $self->config_data('share_subdir', $self->{properties}->{dist_version});
     $self->config_data('config', { PREFIX => '@PrEfIx@',
-                                   LIBS   => ' -L' . $self->quote_literal('@PrEfIx@') . ' -lfreeimage ',
+                                   LIBS   => ' -L' . $self->quote_literal('@PrEfIx@') . $libs,
                                    INC    => ' -DFREEIMAGE_LIB -I' . $self->quote_literal('@PrEfIx@') . ' ',
                                  });
 
