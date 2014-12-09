@@ -29,10 +29,8 @@ CXXFLAGS += -D__ANSI__
 CXXFLAGS += $(INCLUDE)
 
 ifneq ($(CYGWIN),1)
-ifeq ($(shell sh -c 'uname -m 2>/dev/null || echo not'),x86_64)
 	CFLAGS += -fPIC
 	CXXFLAGS += -fPIC
-endif
 endif
 
 TARGET  = freeimage

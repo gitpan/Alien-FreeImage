@@ -4,7 +4,7 @@
       "KMX <kmx@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4204",
+   "generated_by" : "Module::Build version 0.4203",
    "license" : [
       "perl_5"
    ],
@@ -60,5 +60,5 @@
          "url" : "http://github.com/kmx/alien-freeimage"
       }
    },
-   "version" : "0.010"
+   "version" : "0.011"
 }
